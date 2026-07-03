@@ -17,3 +17,15 @@ Full request/response logging (Logger.Level.FULL)
 | appointment-service | 8081 | Core Feign showcase — all Feign features live here |
 | doctor-service | 8082 | Downstream REST API — doctors CRUD |
 | patient-service | 8083 | Downstream REST API — patient CRUD |
+
+
+```
+Client → api-gateway (8080)
+              │
+              ▼
+     appointment-service (8081)
+        │              │
+        ▼              ▼
+  doctor-service   patient-service
+     (8082)            (8083)
+```
