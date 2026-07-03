@@ -1,0 +1,77 @@
+
+server:
+  port: 8081
+
+spring:
+  application:
+    name: appointment-service
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+        group:
+          enabled: true
+
+# ── Feign client config ──────────────────────────────────────────
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 3000
+        read-timeout: 5000
+        logger-level: FULL
+        retryer: feign.Retryer.default
+      doctor-service:
+        connect-timeout: 2000
+        read-timeout: 3000
+        logger-level: FULL
+      patient-service:
+        connect-timeout: 2000
+        read-timeout: 4000
+        logger-level: FULL
+
+# ── Downstream service URLs ──────────────────────────────────────
+services:
+  doctor-url: http://localhost:8082
+  patient-url: http://localhost:8083
+  auth-token: demo-secret-token-healthcare-2024
+
+# ── Resilience4j Circuit Breaker ─────────────────────────────────
+resilience4j:
+  circuitbreaker:
+    instances:
+      doctor-service:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        register-health-indicator: true
+      patient-service:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        register-health-indicator: true
+
+# ── Logging ──────────────────────────────────────────────────────
+# TWO switches needed — Feign level controls WHAT is captured,
+# SLF4J level controls WHETHER it reaches log output.
+
+logging:
+  level:
+      com.openfeign.appointment_service: DEBUG
+      com.openfeign.appointment_service.client.DoctorClient: DEBUG
+      com.openfeign.appointment_service.client.PatientClient: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, circuitbreakers, metrics
+  endpoint:
+    health:
+      show-details: always
+  health:
+      circuitbreakers:
+        enabled: true
+

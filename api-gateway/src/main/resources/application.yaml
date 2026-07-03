@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: appointment-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/appointments/**
+          filters:
+            - AddRequestHeader=X-Auth-Token, gateway-token-healthcare-2024
+            - AddRequestHeader=X-Gateway-Source, api-gateway
+        - id: doctor-service
+          uri: http://localhost:8082
+          predicates:
+              - Path=/api/doctors/**
+          filters:
+            - AddRequestHeader=X-Auth-Token, gateway-token-healthcare-2024
+        - id: patient-service
+          uri: http://localhost:8083
+          predicates:
+              -  Path=/api/patients/**
+          filters:
+              -  AddRequestHeader=X-Auth-Token, gateway-token-healthcare-2024
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, gateway
+
