@@ -9,3 +9,11 @@ Circuit breaker + fallback (Resilience4j)
 API Gateway routing (Spring Cloud Gateway)
 Full request/response logging (Logger.Level.FULL)
 
+
+#Architecture
+| Service | Port | Role |
+|---|---|---|
+| api-gateway | 8080 | Spring Cloud Gateway — routes traffic, adds auth headers |
+| appointment-service | 8081 | Core Feign showcase — all Feign features live here |
+| doctor-service | 8082 | Downstream REST API — doctors CRUD |
+| patient-service | 8083 | Downstream REST API — patient CRUD |
