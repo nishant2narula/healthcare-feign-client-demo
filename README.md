@@ -11,7 +11,7 @@ Full request/response logging (Logger.Level.FULL)
 
 
 # Architecture
-| # Service | # Port | # Role |
+| Service | Port | Role |
 |---|---|---|
 | api-gateway | 8080 | Spring Cloud Gateway — routes traffic, adds auth headers |
 | appointment-service | 8081 | Core Feign showcase — all Feign features live here |
