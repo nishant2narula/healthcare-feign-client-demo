@@ -80,3 +80,7 @@ com.openfeign.appointment_service
 └── service/
     └── AppointmentService.java
 ```
+
+## License
+
+This is a demo/learning project. Feel free to fork and adapt.
