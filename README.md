@@ -29,3 +29,15 @@ Client → api-gateway (8080)
   doctor-service   patient-service
      (8082)            (8083)
 ```
+
+## Feign Features Implemented
+
+| Feature | File | Package |
+|---|---|---|
+| Feign client interfaces | `DoctorClient.java`, `PatientClient.java` | `client/` |
+| Auth header interceptor | `AuthHeaderInterceptor.java` | `interceptor/` |
+| Trace ID propagation | `TraceIdInterceptor.java`, `TraceIdFilter.java` | `interceptor/` |
+| Custom Error Decoder | `HealthcareErrorDecoder.java` | `exception/` |
+| Circuit breaker fallbacks | `DoctorClientFallback.java`, `PatientClientFallback.java` | `exception/` |
+| Global Feign config | `FeignGlobalConfig.java` | `config/` |
+| Domain exceptions | `ServiceExceptions.java` | `exception/` |
