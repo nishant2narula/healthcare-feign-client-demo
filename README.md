@@ -30,6 +30,14 @@ Client → api-gateway (8080)
      (8082)            (8083)
 ```
 
+## Tech Stack
+
+- **Spring Boot** 3.5.15, **Java** 21
+- **Spring Cloud** 2025.0.3 — OpenFeign (`spring-cloud-starter-openfeign`) + Gateway (`spring-cloud-starter-gateway`)
+- **Resilience4j** — Circuit Breaker (`spring-cloud-starter-circuitbreaker-resilience4j`)
+- **Lombok** — boilerplate reduction
+- **In-memory store** — `ConcurrentHashMap` (no DB needed)
+
 ## Feign Features Implemented
 
 | Feature | File | Package |
