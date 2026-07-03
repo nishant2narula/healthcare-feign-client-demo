@@ -49,3 +49,34 @@ Client → api-gateway (8080)
 | Circuit breaker fallbacks | `DoctorClientFallback.java`, `PatientClientFallback.java` | `exception/` |
 | Global Feign config | `FeignGlobalConfig.java` | `config/` |
 | Domain exceptions | `ServiceExceptions.java` | `exception/` |
+
+
+```
+com.openfeign.appointment_service
+├── AppointmentServiceApplication.java   (@EnableFeignClients here)
+├── client/
+│   ├── DoctorClient.java                (@FeignClient → doctor-service:8082)
+│   └── PatientClient.java               (@FeignClient → patient-service:8083)
+├── config/
+│   └── FeignGlobalConfig.java           (Logger.Level.FULL, Retryer, ErrorDecoder)
+├── controller/
+│   └── AppointmentController.java
+├── dto/
+│   ├── AppointmentRequest.java
+│   ├── AppointmentResponse.java         (combined doctor+patient+appointment)
+│   ├── DoctorResponse.java
+│   └── PatientResponse.java
+├── exception/
+│   ├── HealthcareErrorDecoder.java      (maps 404/429/5xx → domain exceptions)
+│   ├── DoctorClientFallback.java        (circuit breaker fallback)
+│   ├── PatientClientFallback.java       (circuit breaker fallback)
+│   └── ServiceExceptions.java
+├── interceptor/
+│   ├── AuthHeaderInterceptor.java       (adds Authorization: Bearer header)
+│   ├── TraceIdInterceptor.java          (propagates X-Trace-Id via MDC)
+│   └── TraceIdFilter.java               (extracts trace ID from incoming request)
+├── model/
+│   └── AppointmentModels.java
+└── service/
+    └── AppointmentService.java
+```
